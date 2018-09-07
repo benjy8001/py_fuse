@@ -1,0 +1,7 @@
+#!/bin/bash -e
+
+#Prepare of venv
+pip3 install virtualenv
+[ ! -f /mnt/apps/pyfuse/bin/python3 ] && virtualenv -p "$(which python3)" /mnt/apps/pyfuse
+
+exit 0

@@ -1,0 +1,20 @@
+[Unit]
+Description=Service Python Fuse
+After=network-online.target
+
+[Service]
+Type=simple
+
+User=root
+Group=root
+
+ExecStart=/mnt/apps/pyfuse/bin/py-fuse
+
+Restart=on-failure
+RestartSec=5
+
+# Configures the time to wait before service is stopped forcefully.
+TimeoutStopSec=300
+
+[Install]
+WantedBy=multi-user.target

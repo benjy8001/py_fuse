@@ -1,0 +1,5 @@
+pyfuse (0.1) testing; urgency=medium
+
+    * Fuse with Python and metadata
+
+ -- Support <benjy80@gmail.com>  Fri, 07 Sep 2018 17:30:00 +0200

@@ -1,0 +1,12 @@
+#!/bin/bash -e
+
+cd /mnt/apps/pyfuse
+chown -R root. /mnt/apps/pyfuse/*
+./bin/pip install pip wheel setuptools --upgrade
+./bin/pip install -r requirements.txt
+
+./bin/python setup.py install
+
+[ ! -L /usr/local/bin/py-fuse ] && ln -fs /mnt/apps/pyfuse/bin/py-fuse /usr/local/bin/py-fuse
+
+exit 0

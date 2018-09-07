@@ -1,0 +1,33 @@
+#!/bin/bash -e
+
+case "$1" in
+    purge)
+        echo "Remove pyfuse dirs ..."
+        for dir in /mnt/apps/pyfuse
+        do
+            [ -d $dir ] && rm -rfv $dir
+        done
+
+        ;;
+    remove)
+        [ -d /mnt/apps/pyfuse ] && rm -rfv /mnt/apps/pyfuse
+        ;;
+
+    upgrade|failed-upgrade|abort-install|abort-upgrade|disappear)
+        echo "Removing"
+        ;;
+
+    *)
+        echo "postrm called with unknown argument \`$1\`" >&2
+        exit 1
+        ;;
+esac
+
+
+echo "Remove symlinks ..."
+for file_to_remove in py-fuse
+do
+    [ -L "/usr/local/bin/${file_to_remove}" ] && rm -v "/usr/local/bin/${file_to_remove}"
+done
+
+exit 0

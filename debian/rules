@@ -1,0 +1,17 @@
+#!/usr/bin/make -f
+
+#export DH_VERBOSE=1
+# Core (check http://debathena.mit.edu/config-packages for more information)
+%:
+	dh $@ --with=config-package --with python3 --buildsystem=pybuild
+
+override_dh_usrlocal:
+	true
+
+# Prevent dh_installdeb of treating files in /etc as configuration files
+# you need this if need configuration files been always rewritten
+# even if changed
+override_dh_installdeb:
+	dh_installdeb
+	# remove init script of conffiles
+	sed -i "/etc\/init\.d/d" debian/*/DEBIAN/conffiles

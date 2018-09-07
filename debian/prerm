@@ -1,0 +1,28 @@
+#!/bin/bash -e
+
+DEST_BACKUP=/mnt/apps/.archives/pyfuse
+mkdir -p "${DEST_BACKUP}/etc"
+mkdir -p "${DEST_BACKUP}/src"
+
+cp -r /mnt/apps/pyfuse/ "${DEST_BACKUP}/src/"
+
+# shellcheck disable=SC2086
+tar czf "/mnt/apps/.archives/$(date '+%Y%m%d%H%M%S')_pyfuse.tar.gz" ${DEST_BACKUP}
+# shellcheck disable=SC2086
+rm -rf ${DEST_BACKUP}
+
+if systemctl >/dev/null 2>&1
+then
+    for service in py-fuse
+    do
+        systemctl stop "${service}" || true
+        systemctl disable "${service}" || true
+    done
+    systemctl daemon-reload
+else
+    for service in py-fuse
+    do
+        "/etc/init.d/${service}" stop
+    done
+fi
+exit 0
